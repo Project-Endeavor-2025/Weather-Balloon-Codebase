@@ -1,5 +1,5 @@
 # Weather Balloon Codebase
-<img src="images/weather_balloon.jpg"/>
+![Project Endeavor](https://github.com/user-attachments/assets/e9501249-1fc0-40be-9502-92947daf162d)
 
 This repository contains all the code for the various sensors integrating with the controller in the weather balloon payload of the Endeavor 1 mission.
 

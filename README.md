@@ -9,5 +9,4 @@ The sensors will be connected to the Raspberry through its pinout slots, and log
 ## Sensors
 
 ### 1. Temperature and Humidity Sensor
-       The DHT11 Temp & Humidity sensor shall be used to monitor the temperature & humidity in the various levels of the atmosphere.
-2. 
+The DHT11 Temp & Humidity sensor shall be used to monitor the temperature & humidity in the various levels of the atmosphere.

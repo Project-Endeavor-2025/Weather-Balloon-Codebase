@@ -1,0 +1,13 @@
+pip install Adafruit_DHT
+import Adafruit_DHT
+
+# Sensor type and GPIO pin
+sensor = Adafruit_DHT.DHT11
+gpio_pin = 4  # GPIO4 (Physical pin 7)
+
+humidity, temperature = Adafruit_DHT.read_retry(sensor, gpio_pin)
+
+if humidity is not None and temperature is not None:
+    print(f"Temp={temperature:.1f}°C  Humidity={humidity:.1f}%")
+else:
+    print("Failed to retrieve data from DHT11 sensor")

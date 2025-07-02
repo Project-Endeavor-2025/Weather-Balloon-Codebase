@@ -1,0 +1,29 @@
+# Use the included Gravity I2C cable for easy connection.
+# Enable I2C on your Raspberry Pi via raspi-config if not already enabled.
+
+pip install smbus2
+import smbus2
+import time
+
+I2C_BUS = 1
+OZONE_SENSOR_ADDR = 0x73  # Default I2C address
+
+bus = smbus2.SMBus(I2C_BUS)
+
+def read_ozone():
+    # According to DFRobot's library, ozone concentration is read from register 0x10 (high byte) and 0x11 (low byte)
+    high = bus.read_byte_data(OZONE_SENSOR_ADDR, 0x10)
+    low = bus.read_byte_data(OZONE_SENSOR_ADDR, 0x11)
+    raw = (high << 8) | low
+    # Conversion: 0-1000 = 0-10ppm (resolution: 0.01ppm)
+    ozone_ppm = raw * 0.01
+    return ozone_ppm
+
+while True:
+    ozone = read_ozone()
+    print(f"Ozone Concentration: {ozone:.2f} ppm")
+    time.sleep(2)
+# The sensor requires a warm-up time of about 3 minutes after power-on for stable readings.
+
+# For robust applications, use the DFRobot_OzoneSensor Python library, which handles more advanced functions and error checking.
+

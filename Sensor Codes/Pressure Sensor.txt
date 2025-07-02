@@ -1,0 +1,23 @@
+sudo raspi-config
+# Navigate to Interface Options → I2C → Enable. Reboot if prompted
+pip install smbus2 bmp280
+import smbus2
+import bme280  # The bmp280 library is often bundled as bme280
+
+# I2C bus (1 for Raspberry Pi newer models)
+i2c_bus = 1
+# Default I2C address for BMP280 is 0x76; use 0x77 if SDO is pulled high
+address = 0x76
+
+# Initialize I2C bus
+bus = smbus2.SMBus(i2c_bus)
+
+# Load calibration parameters
+calibration_params = bme280.load_calibration_params(bus, address)
+
+# Read sensor data
+data = bme280.sample(bus, address, calibration_params)
+
+print(f"Temperature: {data.temperature:.2f} °C")
+print(f"Pressure: {data.pressure:.2f} hPa")
+# If you get an import error for bme280, try installing pip install RPi.bme280 or use an alternative BMP280 library.

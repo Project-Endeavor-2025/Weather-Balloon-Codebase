@@ -1,0 +1,24 @@
+volatile unsigned long counts = 0;
+unsigned long previousMillis = 0;
+const unsigned long LOG_PERIOD = 60000; // 60 seconds
+
+void impulse() {
+  counts++;  // Increment count on each pulse (interrupt)
+}
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(2, INPUT);
+  attachInterrupt(digitalPinToInterrupt(2), impulse, FALLING);
+  Serial.println("Geiger Counter Started");
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= LOG_PERIOD) {
+    previousMillis = currentMillis;
+    Serial.print("CPM: ");
+    Serial.println(counts);
+    counts = 0;  // Reset count for next interval
+  }
+}

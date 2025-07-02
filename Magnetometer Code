@@ -1,0 +1,29 @@
+pip install smbus2
+import smbus2
+import time
+
+# HMC5883L default address
+DEVICE_ADDRESS = 0x1E
+
+bus = smbus2.SMBus(1)
+
+# Initialize the sensor
+bus.write_byte_data(DEVICE_ADDRESS, 0x00, 0x70)  # Configuration Register A: 8-average, 15 Hz, normal measurement
+bus.write_byte_data(DEVICE_ADDRESS, 0x01, 0xA0)  # Configuration Register B: Gain = 5
+bus.write_byte_data(DEVICE_ADDRESS, 0x02, 0x00)  # Mode Register: Continuous measurement mode
+
+def read_raw_data(addr):
+    high = bus.read_byte_data(DEVICE_ADDRESS, addr)
+    low = bus.read_byte_data(DEVICE_ADDRESS, addr+1)
+    value = high << 8 | low
+    # Convert to signed value
+    if value > 32767:
+        value -= 65536
+    return value
+
+while True:
+    x = read_raw_data(0x03)
+    z = read_raw_data(0x05)
+    y = read_raw_data(0x07)
+    print(f"X: {x}, Y: {y}, Z: {z}")
+    time.sleep(1)

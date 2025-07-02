@@ -1,6 +1,6 @@
-<img src="weather-balloon.jpg"/>
-
 # Weather Balloon Codebase
+<img src="images/weather_balloon.jpg"/>
+
 This repository contains all the code for the various sensors integrating with the controller in the weather balloon payload of the Endeavor 1 mission.
 
 ## Payload Layout
